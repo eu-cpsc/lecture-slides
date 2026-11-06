@@ -3,7 +3,9 @@ name: Publish to npm
 # Releases happen by bumping "version" in package.json and merging to main.
 # When the version has no v<version> tag yet, this workflow:
 #   1. builds the starter site against the package,
-#   2. publishes to npm (trusted publishing: no token stored here), and
+#   2. stages it on npm (trusted publishing: no token stored here). A
+#      maintainer approves it on npmjs.com or with `npm stage approve`, and
+#      only then does the version go live; and
 #   3. creates the v<version> tag and GitHub release.
 # It can also be started by hand from the Actions tab.
 #
@@ -48,7 +50,7 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      # Trusted publishing needs npm 11.5.1 or newer.
+      # Trusted publishing and `npm stage` need a recent npm 11.
       - if: steps.version.outputs.release == 'true'
         run: npm install -g npm@11
 
@@ -57,8 +59,10 @@ jobs:
         working-directory: starter
         run: npm install --no-audit --no-fund && npm run build
 
+      # Staged publishing: the package settings require a human to approve each
+      # version, so this uploads it for approval instead of publishing directly.
       - if: steps.version.outputs.release == 'true'
-        run: npm publish --access public
+        run: npm stage publish --access public
 
       - if: steps.version.outputs.release == 'true'
         name: Create tag and GitHub release

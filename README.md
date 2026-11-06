@@ -220,10 +220,12 @@ institution is a new file in `src/styles/themes/` scoped to
 ## Releasing
 
 1. Bump `version` in `package.json` (e.g. `0.2.0`) and merge to `main`.
-2. The **Publish to npm** workflow builds the starter, publishes to npm, and
-   creates the `v0.2.0` tag and GitHub release. Approve the staged version on
-   npmjs.com if npm asks.
-3. Course repos update with `npm install @eu-cpsc/lecture-slides@0.2.0`, or
+2. The **Publish to npm** workflow builds the starter, stages the version on
+   npm, and creates the `v0.2.0` tag and GitHub release.
+3. Approve the staged version (2FA) on npmjs.com, or run
+   `npm stage list @eu-cpsc/lecture-slides` and
+   `npm stage approve <stage-id>`. Until then it isn't installable from npm.
+4. Course repos update with `npm install @eu-cpsc/lecture-slides@0.2.0`, or
    `github:eu-cpsc/lecture-slides#v0.2.0` for a GitHub install.
 
 If a run fails before publishing, fix the problem and re-run it from the
