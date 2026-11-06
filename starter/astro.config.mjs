@@ -19,8 +19,9 @@ export default defineConfig({
         links: [{ label: 'GitHub', href: 'https://github.com/eu-cpsc/lecture-slides' }],
       },
       brand: 'evangel',
-      // logo: 'logo.svg',          // files in public/
-      // logoOnDark: 'logo-white.svg',
+      // EU shield: maroon on light backgrounds, white on dark (EU Brand Guide).
+      logo: 'eu-shield.png',
+      logoOnDark: 'eu-shield-white.png',
       favicon: 'favicon.svg',
       // customCss: ['./src/styles/course.css'],
     }),
