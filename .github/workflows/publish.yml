@@ -3,9 +3,7 @@ name: Publish to npm
 # Releases happen by bumping "version" in package.json and merging to main.
 # When the version has no v<version> tag yet, this workflow:
 #   1. builds the starter site against the package,
-#   2. stages it on npm (trusted publishing: no token stored here). A
-#      maintainer approves it on npmjs.com or with `npm stage approve`, and
-#      only then does the version go live; and
+#   2. publishes it to npm (trusted publishing: no token stored here), and
 #   3. creates the v<version> tag and GitHub release.
 # It can also be started by hand from the Actions tab.
 #
@@ -50,7 +48,7 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      # Trusted publishing and `npm stage` need a recent npm 11.
+      # Trusted publishing needs npm 11.5.1 or newer.
       - if: steps.version.outputs.release == 'true'
         run: npm install -g npm@11
 
@@ -59,11 +57,12 @@ jobs:
         working-directory: starter
         run: npm install --no-audit --no-fund && npm run build
 
-      # Staged publishing: the package settings require a human to approve each
-      # version, so this uploads it for approval instead of publishing directly.
       # Skipped if this version is already on npm (e.g. published by hand).
+      # To require a human approval for each version instead, turn off direct
+      # publishing for the trusted publisher on npmjs.com and change this to
+      # `npm stage publish --access public`.
       - if: steps.version.outputs.release == 'true'
-        name: Stage on npm
+        name: Publish to npm
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
@@ -71,7 +70,7 @@ jobs:
           if npm view "$name@$VERSION" version >/dev/null 2>&1; then
             echo "$name@$VERSION is already on npm; skipping."
           else
-            npm stage publish --access public
+            npm publish --access public
           fi
 
       - if: steps.version.outputs.release == 'true'
