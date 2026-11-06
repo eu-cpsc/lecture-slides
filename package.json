@@ -4,19 +4,44 @@
   "description": "Astro integration for course lecture sites: Markdown slides with notes, a presenter view, and printable handouts.",
   "license": "MIT",
   "type": "module",
-  "repository": { "type": "git", "url": "git+https://github.com/eu-cpsc/lecture-slides.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eu-cpsc/lecture-slides.git"
+  },
   "homepage": "https://eu-cpsc.github.io/lecture-slides/",
-  "keywords": ["astro-integration", "astro-component", "withastro", "slides", "lecture", "presentation"],
+  "keywords": [
+    "astro-integration",
+    "astro-component",
+    "withastro",
+    "slides",
+    "lecture",
+    "presentation"
+  ],
   "exports": {
-    ".": "./src/index.mjs",
-    "./content": "./src/content.mjs",
+    ".": {
+      "types": "./src/index.d.mts",
+      "default": "./src/index.mjs"
+    },
+    "./content": {
+      "types": "./src/content.d.mts",
+      "default": "./src/content.mjs"
+    },
     "./components/*": "./src/components/*",
     "./pages/*": "./src/pages/*",
     "./styles/*": "./src/styles/*"
   },
-  "files": ["src", "templates", "README.md", "LICENSE"],
-  "engines": { "node": ">=22.12" },
-  "publishConfig": { "access": "public" },
+  "files": [
+    "src",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "astro": "^5.0.0"
   },
