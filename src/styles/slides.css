@@ -154,8 +154,12 @@
   content: ''; display: block; width: 1.4em; height: 0.08em; margin-top: 0.3em; border-radius: 1em; background: currentColor; opacity: 0.85;
 }
 .slide.title::after {
-  font-size: 1em; content: ''; right: 2.6em; bottom: 1.8em; left: auto; width: 9em; height: 2.4em;
+  font-size: 1em; content: ''; right: 2.4em; bottom: 2em; left: auto; width: 9em; height: 2.6em;
   background: var(--logo-on-dark, none) no-repeat right bottom / contain;
+}
+/* Hide the logo on small thumbnails, where it would fall below brand minimum sizes. */
+@container (max-width: 640px) {
+  .slide.title::after { display: none; }
 }
 
 /* Section divider */

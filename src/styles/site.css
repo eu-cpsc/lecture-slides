@@ -283,7 +283,8 @@ body.presenter-mode > :not(.presenter):not(dialog) { display: none !important; }
   font-family: var(--font-heading); font-weight: var(--heading-weight);
 }
 .lecture-card h2 { font-weight: 700; }
-.brand-logo { height: 26px; width: auto; display: block; }
+.brand-logo { height: 32px; width: auto; display: block; flex: none; align-self: center; } /* EU guide: shield min 24x31 px */
+.brand:has(.brand-logo) { align-items: center; }
 .brand-logo.on-dark { display: none; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .brand-logo.has-dark { display: none; }
