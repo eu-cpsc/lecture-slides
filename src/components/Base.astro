@@ -12,6 +12,7 @@ import '../styles/slides.css';
 import '../styles/print.css';
 import 'virtual:lecture-slides/custom-css';
 import config from 'virtual:lecture-slides/config';
+import { logos } from '../lib/brand';
 
 const { course } = config;
 
@@ -23,8 +24,7 @@ interface Props {
 const { title, description = course.blurb, bodyClass } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const asset = (p?: string | null) => (p ? base + p.replace(/^\//, '') : undefined);
-const logo = asset(config.logo);
-const logoOnDark = asset(config.logoOnDark);
+const { logo, logoOnDark } = logos();
 const defaultFavicon =
   'data:image/svg+xml,' +
   encodeURIComponent(

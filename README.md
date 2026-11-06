@@ -63,8 +63,8 @@ export default defineConfig({
         links: [{ label: 'Syllabus', href: 'https://...' }],
       },
       brand: 'evangel',              // or 'default'
-      logo: 'logo.svg',              // optional, files in public/
-      logoOnDark: 'logo-white.svg',  // optional, white version for title slides
+      // logo: 'logo.svg',            // optional: override the theme's logo (file in public/), or false
+      // logoOnDark: 'logo-white.svg', // optional: white version for title slides and dark mode
       favicon: 'favicon.svg',        // optional
       customCss: ['./src/styles/course.css'], // optional overrides
     }),
@@ -83,7 +83,7 @@ export const collections = { lectures };
 | `course.code` | required | Shown in the header and on every slide |
 | `course.title`, `term`, `instructor`, `blurb`, `links` | | Home page and header |
 | `brand` | `'evangel'` | Theme: `'evangel'` or `'default'` |
-| `logo`, `logoOnDark` | none | Logo files in `public/` |
+| `logo`, `logoOnDark` | the theme's logo | Files in `public/` to use instead, or `false` for no logo. The `evangel` theme includes the EU shield. |
 | `favicon` | built-in icon | File in `public/` |
 | `customCss` | `[]` | CSS files loaded after the theme |
 | `homePage` | `true` | Set `false` to write your own `src/pages/index.astro` |

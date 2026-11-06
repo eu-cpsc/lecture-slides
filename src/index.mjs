@@ -39,8 +39,9 @@ const CSS_ID = 'virtual:lecture-slides/custom-css';
  * @typedef {object} LectureSlidesOptions
  * @property {CourseOptions} course
  * @property {'evangel' | 'default' | string} [brand]  Theme. Default: 'evangel'.
- * @property {string} [logo]        File in public/ shown on light backgrounds (site header).
- * @property {string} [logoOnDark]  White logo in public/ for title slides and dark mode.
+ * @property {string | false} [logo]        File in public/ for light backgrounds (site header).
+ *   Defaults to the theme's logo (EU shield for 'evangel'); false for none.
+ * @property {string | false} [logoOnDark]  White logo for title slides and dark mode; same defaults.
  * @property {string} [favicon]     File in public/. Default: a built-in icon.
  * @property {string[]} [customCss] CSS files (relative to the project root) loaded after the theme.
  * @property {boolean} [homePage]   Add the built-in lecture list at "/". Default: true.

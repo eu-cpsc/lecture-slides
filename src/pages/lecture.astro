@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../components/Base.astro';
 import config from 'virtual:lecture-slides/config';
 const { course } = config;
+import { logos } from '../lib/brand';
 import { getLectures, formatDate, lectureLabel, type Lecture } from '../lib/lectures';
 
 export async function getStaticPaths() {
@@ -23,7 +24,8 @@ const base = import.meta.env.BASE_URL;
 const label = `${course.code} · ${lectureLabel(lecture)}`;
 const cssString = (s: string) => `"${s.replace(/["\\]/g, '\\$&')}"`;
 const aspect = d.aspect === '4:3' ? '4 / 3' : '16 / 9';
-const logoVar = config.logoOnDark ? ` --logo-on-dark: url(${JSON.stringify(base + config.logoOnDark.replace(/^\//, ''))});` : '';
+const { logoOnDark } = logos();
+const logoVar = logoOnDark ? ` --logo-on-dark: url(${JSON.stringify(logoOnDark)});` : '';
 ---
 
 <Base title={`${d.title} · ${course.code}`} description={d.description} bodyClass="lecture-page">

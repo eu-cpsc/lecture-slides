@@ -9,8 +9,8 @@ declare module 'virtual:lecture-slides/config' {
       links: { label: string; href: string }[];
     };
     brand: string;
-    logo: string | null;
-    logoOnDark: string | null;
+    logo: string | false | null;
+    logoOnDark: string | false | null;
     favicon: string | null;
   };
   export default config;
