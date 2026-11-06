@@ -219,23 +219,15 @@ institution is a new file in `src/styles/themes/` scoped to
 
 ## Releasing
 
-1. Bump `version` in `package.json` and merge to `main`.
-2. Create a GitHub release with tag `v<version>` (e.g. `v0.2.0`).
-   Course repos using `github:eu-cpsc/lecture-slides#v0.2.0` can update right
-   away.
-3. The **Publish to npm** workflow publishes the release to npm.
+1. Bump `version` in `package.json` (e.g. `0.2.0`) and merge to `main`.
+2. The **Publish to npm** workflow builds the starter, publishes to npm, and
+   creates the `v0.2.0` tag and GitHub release. Approve the staged version on
+   npmjs.com if npm asks.
+3. Course repos update with `npm install @eu-cpsc/lecture-slides@0.2.0`, or
+   `github:eu-cpsc/lecture-slides#v0.2.0` for a GitHub install.
 
-**First npm publish (once).** npm only allows trusted publishing for a
-package that already exists, so publish the first version by hand:
-
-```bash
-npm login
-npm publish --access public
-```
-
-Then on npmjs.com, open the package → **Settings → Trusted publishing → GitHub
-Actions**, with repository `eu-cpsc/lecture-slides` and workflow
-`publish.yml`. Later releases publish from the workflow with no token.
+If a run fails before publishing, fix the problem and re-run it from the
+Actions tab. A version that already has a tag is skipped.
 
 ## License
 

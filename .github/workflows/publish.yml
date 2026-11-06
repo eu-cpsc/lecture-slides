@@ -1,37 +1,68 @@
 name: Publish to npm
 
-# Runs when a GitHub release is published. Uses npm trusted publishing (OIDC),
-# so no npm token is stored in this repo. One-time setup, after the first
-# manual publish: npmjs.com -> @eu-cpsc/lecture-slides -> Settings ->
-# Trusted publishing -> GitHub Actions, repository eu-cpsc/lecture-slides,
+# Releases happen by bumping "version" in package.json and merging to main.
+# When the version has no v<version> tag yet, this workflow:
+#   1. builds the starter site against the package,
+#   2. publishes to npm (trusted publishing: no token stored here), and
+#   3. creates the v<version> tag and GitHub release.
+# It can also be started by hand from the Actions tab.
+#
+# npm trusted publisher settings: repository eu-cpsc/lecture-slides,
 # workflow publish.yml.
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [main]
+    paths: [package.json]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  id-token: write
+  contents: write # create the tag and release
+  id-token: write # npm trusted publishing
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - id: version
+        name: Is this version already released?
+        run: |
+          v="$(node -p "require('./package.json').version")"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code --tags origin "refs/tags/v$v" >/dev/null; then
+            echo "v$v is already tagged; nothing to do."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.version.outputs.release == 'true'
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
+
       # Trusted publishing needs npm 11.5.1 or newer.
-      - run: npm install -g npm@11
-      - name: Check the tag matches package.json
-        if: github.event_name == 'release'
-        run: |
-          v="$(node -p "require('./package.json').version")"
-          [ "${GITHUB_REF_NAME#v}" = "$v" ] || { echo "Tag $GITHUB_REF_NAME does not match version $v"; exit 1; }
-      - name: Build the starter against this version
+      - if: steps.version.outputs.release == 'true'
+        run: npm install -g npm@11
+
+      - if: steps.version.outputs.release == 'true'
+        name: Build the starter against this version
         working-directory: starter
         run: npm install --no-audit --no-fund && npm run build
-      - run: npm publish --access public
+
+      - if: steps.version.outputs.release == 'true'
+        run: npm publish --access public
+
+      - if: steps.version.outputs.release == 'true'
+        name: Create tag and GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh release create "v$VERSION" --target "$GITHUB_SHA" --title "v$VERSION" --generate-notes
