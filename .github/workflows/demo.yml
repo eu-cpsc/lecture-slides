@@ -1,0 +1,56 @@
+name: Build and deploy demo site
+
+# Builds the starter site against this package on every push and pull request,
+# and deploys it to GitHub Pages from main: https://eu-cpsc.github.io/lecture-slides/
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: demo-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: starter
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
+      # install-links (starter/.npmrc) copies the package in, like a real install.
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+        env:
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path || '/lecture-slides' }}
+      - if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: starter/dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

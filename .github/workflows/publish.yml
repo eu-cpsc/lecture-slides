@@ -1,0 +1,37 @@
+name: Publish to npm
+
+# Runs when a GitHub release is published. Uses npm trusted publishing (OIDC),
+# so no npm token is stored in this repo. One-time setup, after the first
+# manual publish: npmjs.com -> @eu-cpsc/lecture-slides -> Settings ->
+# Trusted publishing -> GitHub Actions, repository eu-cpsc/lecture-slides,
+# workflow publish.yml.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm 11.5.1 or newer.
+      - run: npm install -g npm@11
+      - name: Check the tag matches package.json
+        if: github.event_name == 'release'
+        run: |
+          v="$(node -p "require('./package.json').version")"
+          [ "${GITHUB_REF_NAME#v}" = "$v" ] || { echo "Tag $GITHUB_REF_NAME does not match version $v"; exit 1; }
+      - name: Build the starter against this version
+        working-directory: starter
+        run: npm install --no-audit --no-fund && npm run build
+      - run: npm publish --access public

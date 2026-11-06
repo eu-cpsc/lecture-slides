@@ -1,0 +1,85 @@
+---
+import '@fontsource-variable/bitter/wght.css';
+import '@fontsource-variable/bitter/wght-italic.css';
+import '@fontsource-variable/open-sans/wdth.css';
+import '@fontsource-variable/open-sans/wght-italic.css';
+import '@fontsource-variable/jetbrains-mono';
+import 'katex/dist/katex.min.css';
+import '../styles/tokens.css';
+import '../styles/themes/evangel.css';
+import '../styles/site.css';
+import '../styles/slides.css';
+import '../styles/print.css';
+import 'virtual:lecture-slides/custom-css';
+import config from 'virtual:lecture-slides/config';
+
+const { course } = config;
+
+interface Props {
+  title: string;
+  description?: string;
+  bodyClass?: string;
+}
+const { title, description = course.blurb, bodyClass } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const asset = (p?: string | null) => (p ? base + p.replace(/^\//, '') : undefined);
+const logo = asset(config.logo);
+const logoOnDark = asset(config.logoOnDark);
+const defaultFavicon =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#75243d"/><rect x="6" y="8" width="20" height="13" rx="2" fill="#fff"/><path d="M13 25h6M16 21v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>',
+  );
+const favicon = asset(config.favicon) ?? defaultFavicon;
+---
+
+<!doctype html>
+<html lang="en" data-brand={config.brand}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={favicon} />
+    <script is:inline>
+      // Apply the saved light/dark choice before first paint.
+      try {
+        const t = localStorage.getItem('site-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <header class="site-header">
+      <slot name="header-start" />
+      <a class="brand" href={base}>
+        {logo && <img class:list={['brand-logo', { 'has-dark': !!logoOnDark }]} src={logo} alt="" />}
+        {logoOnDark && <img class="brand-logo on-dark" src={logoOnDark} alt="" />}
+        <span class="brand-code">{course.code}</span>
+        <span class="brand-sep">/</span>
+        <span class="brand-title"><slot name="crumb">{course.title}</slot></span>
+      </a>
+      <div class="header-spacer"></div>
+      <nav class="header-links">
+        {course.links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+      <slot name="header-end" />
+      <button class="btn icon theme-toggle" type="button" title="Toggle light/dark" aria-label="Toggle light/dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" /></svg>
+      </button>
+    </header>
+    <slot />
+    <script>
+      const btn = document.querySelector<HTMLButtonElement>('.theme-toggle');
+      btn?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const isDark = root.dataset.theme
+          ? root.dataset.theme === 'dark'
+          : matchMedia('(prefers-color-scheme: dark)').matches;
+        const next = isDark ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('site-theme', next); } catch {}
+      });
+    </script>
+  </body>
+</html>

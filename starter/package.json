@@ -1,0 +1,14 @@
+{
+  "name": "lecture-slides-starter",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@eu-cpsc/lecture-slides": "file:..",
+    "astro": "^5.18.2"
+  }
+}

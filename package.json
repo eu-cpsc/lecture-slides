@@ -1,0 +1,33 @@
+{
+  "name": "@eu-cpsc/lecture-slides",
+  "version": "0.1.0",
+  "description": "Astro integration for course lecture sites: Markdown slides with notes, a presenter view, and printable handouts.",
+  "license": "MIT",
+  "type": "module",
+  "repository": { "type": "git", "url": "git+https://github.com/eu-cpsc/lecture-slides.git" },
+  "homepage": "https://eu-cpsc.github.io/lecture-slides/",
+  "keywords": ["astro-integration", "astro-component", "withastro", "slides", "lecture", "presentation"],
+  "exports": {
+    ".": "./src/index.mjs",
+    "./content": "./src/content.mjs",
+    "./components/*": "./src/components/*",
+    "./pages/*": "./src/pages/*",
+    "./styles/*": "./src/styles/*"
+  },
+  "files": ["src", "templates", "README.md", "LICENSE"],
+  "engines": { "node": ">=22.12" },
+  "publishConfig": { "access": "public" },
+  "peerDependencies": {
+    "astro": "^5.0.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/bitter": "^5.2.0",
+    "@fontsource-variable/jetbrains-mono": "^5.2.0",
+    "@fontsource-variable/open-sans": "^5.2.0",
+    "katex": "^0.19.1",
+    "rehype-katex": "^7.0.1",
+    "remark-directive": "^4.0.0",
+    "remark-math": "^6.0.0",
+    "unist-util-visit": "^5.0.0"
+  }
+}
