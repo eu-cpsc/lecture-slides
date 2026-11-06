@@ -61,8 +61,18 @@ jobs:
 
       # Staged publishing: the package settings require a human to approve each
       # version, so this uploads it for approval instead of publishing directly.
+      # Skipped if this version is already on npm (e.g. published by hand).
       - if: steps.version.outputs.release == 'true'
-        run: npm stage publish --access public
+        name: Stage on npm
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          if npm view "$name@$VERSION" version >/dev/null 2>&1; then
+            echo "$name@$VERSION is already on npm; skipping."
+          else
+            npm stage publish --access public
+          fi
 
       - if: steps.version.outputs.release == 'true'
         name: Create tag and GitHub release
