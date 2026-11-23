@@ -49,7 +49,7 @@ import { defineConfig } from 'astro/config';
 import lectureSlides from '@eu-cpsc/lecture-slides';
 
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'https://my-org.github.io',
+  site: process.env.SITE_URL || 'https://my-org.github.io',
   base: process.env.BASE_PATH ?? '/my-repo',
   trailingSlash: 'always',
   integrations: [
