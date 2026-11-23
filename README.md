@@ -217,21 +217,6 @@ institution is a new file in `src/styles/themes/` scoped to
 | `src/styles/` | Tokens, themes, slide styles, site chrome, print |
 | `starter/` | Example course site (the demo); also the CI test |
 
-## Upgrading a course site from 0.2 (Astro 5)
-
-0.3 moves to Astro 7. In the course site's `site/` folder:
-
-```bash
-npm install @eu-cpsc/lecture-slides@^0.3.0 astro@^7.4.13
-```
-
-No other changes are needed. The integration switches Astro to the `unified`
-Markdown processor (Astro 7 defaults to Sätteri, which can't run the slide
-plugins), so lectures render as before. If the site sets
-`markdown.processor: unified({...})` itself, the slide plugins are added to it.
-Any other processor is replaced. Remove the `vite.ssr.noExternal` workaround
-for the font CSS if the site still has it.
-
 ## Releasing
 
 1. Bump `version` in `package.json` (e.g. `0.2.0`) and merge to `main`.
