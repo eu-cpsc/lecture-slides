@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { unified } from '@astrojs/markdown-remark';
 import remarkDirective from 'remark-directive';
 import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import rehypeKatex from './plugins/rehype-katex.mjs';
 import remarkSlides from './plugins/remark-slides.mjs';
 
 const PKG = '@eu-cpsc/lecture-slides';

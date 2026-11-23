@@ -211,6 +211,7 @@ institution is a new file in `src/styles/themes/` scoped to
 | `src/index.mjs` | The integration: markdown plugins, routes, config |
 | `src/content.mjs` | The `lectures` content collection and frontmatter schema |
 | `src/plugins/remark-slides.mjs` | Splits a lecture at `---` into slide + notes sections |
+| `src/plugins/rehype-katex.mjs` | Renders math with KaTeX |
 | `src/pages/` | Home page and lecture page (injected routes) |
 | `src/components/Base.astro` | Page shell; can be reused by custom pages |
 | `src/scripts/deck.ts` | Presenting, steps, scroll tracking, presenter sync, shortcuts |
