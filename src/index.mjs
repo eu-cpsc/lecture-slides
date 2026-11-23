@@ -82,7 +82,9 @@ export default function lectureSlides(options) {
             shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' }, wrap: false },
           },
           vite: {
-            ssr: { noExternal: [PKG] },
+            // Bundle the font packages through Vite: Node can't load their CSS
+            // during SSR in `astro dev`.
+            ssr: { noExternal: [PKG, /^@fontsource-variable\//] },
             plugins: [
               {
                 name: 'lecture-slides-virtual',
