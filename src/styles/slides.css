@@ -9,8 +9,8 @@
   width: 100%;
 }
 .slide {
-  --slide-pad-x: 2.4em;
-  --slide-pad-y: 1.8em;
+  --slide-pad-x: 1.8em;
+  --slide-pad-y: 1.2em;
   position: relative;
   width: 100%;
   height: 100%;
@@ -47,7 +47,7 @@
 /* Typography */
 .slide h1, .slide h2, .slide h3 { font-family: var(--font-heading); line-height: 1.12; letter-spacing: -0.01em; font-weight: var(--heading-weight); }
 .slide h1 { font-size: 2.1em; }
-.slide h2 { font-size: 1.55em; color: var(--slide-text); padding-bottom: 0.25em; margin-bottom: 0.2em; position: relative; }
+.slide h2 { font-size: 1.3em; color: var(--slide-text); padding-bottom: 0.25em; margin-bottom: 0.2em; position: relative; }
 .slide h2::after { content: ''; position: absolute; left: 0; bottom: 0; width: 2.2em; height: 0.12em; border-radius: 1em; background: var(--slide-accent); }
 .slide h3 { font-size: 1.1em; color: var(--slide-secondary); font-weight: 700; }
 .slide p { max-width: 38em; }
