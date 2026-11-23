@@ -16,6 +16,7 @@
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isUnifiedProcessor, unified } from '@astrojs/markdown-remark';
 import remarkDirective from 'remark-directive';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -75,10 +76,21 @@ export default function lectureSlides(options) {
         const root = fileURLToPath(astroConfig.root);
         const customCss = (options.customCss ?? []).map((p) => path.resolve(root, p));
 
+        // Astro 7's default Markdown processor (Sätteri) can't run remark/rehype
+        // plugins, so lectures use the unified processor. If the course already
+        // set markdown.processor to unified(), add the slide plugins to it.
+        const remarkPlugins = [remarkDirective, remarkMath, remarkSlides];
+        const rehypePlugins = [rehypeKatex];
+        const current = astroConfig.markdown.processor;
+        if (current && isUnifiedProcessor(current)) {
+          current.options.remarkPlugins.push(...remarkPlugins);
+          current.options.rehypePlugins.push(...rehypePlugins);
+        } else {
+          astroConfig.markdown.processor = unified({ remarkPlugins, rehypePlugins });
+        }
+
         updateConfig({
           markdown: {
-            remarkPlugins: [remarkDirective, remarkMath, remarkSlides],
-            rehypePlugins: [rehypeKatex],
             shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' }, wrap: false },
           },
           vite: {

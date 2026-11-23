@@ -24,10 +24,10 @@ The default theme follows the Evangel University brand guide.
 2. In its `package.json`, replace `"file:.."` with a released version:
 
    ```json
-   "@eu-cpsc/lecture-slides": "github:eu-cpsc/lecture-slides#v0.1.0"
+   "@eu-cpsc/lecture-slides": "^0.3.0"
    ```
 
-   or, once the package is on npm, `"^0.1.0"`.
+   The package needs Astro 7 (`"astro": "^7.4.13"`) and Node 22.23.4 or newer.
 3. Edit `astro.config.mjs`: course details, and `base` (your repo name, for
    GitHub Pages).
 4. Replace the demo lecture in `src/content/lectures/` with your own. Start
@@ -216,6 +216,21 @@ institution is a new file in `src/styles/themes/` scoped to
 | `src/scripts/deck.ts` | Presenting, steps, scroll tracking, presenter sync, shortcuts |
 | `src/styles/` | Tokens, themes, slide styles, site chrome, print |
 | `starter/` | Example course site (the demo); also the CI test |
+
+## Upgrading a course site from 0.2 (Astro 5)
+
+0.3 moves to Astro 7. In the course site's `site/` folder:
+
+```bash
+npm install @eu-cpsc/lecture-slides@^0.3.0 astro@^7.4.13
+```
+
+No other changes are needed. The integration switches Astro to the `unified`
+Markdown processor (Astro 7 defaults to Sätteri, which can't run the slide
+plugins), so lectures render as before. If the site sets
+`markdown.processor: unified({...})` itself, the slide plugins are added to it.
+Any other processor is replaced. Remove the `vite.ssr.noExternal` workaround
+for the font CSS if the site still has it.
 
 ## Releasing
 

@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "@eu-cpsc/lecture-slides": "file:..",
-    "astro": "^5.18.2"
+    "astro": "^7.4.13"
   }
 }
