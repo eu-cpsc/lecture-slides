@@ -143,7 +143,7 @@
 .slide.section::after { color: color-mix(in srgb, var(--slide-on-accent) 70%, transparent); }
 
 /* Title slide: large heading, deck label above, brand pattern and optional logo */
-.slide.title { background-image: var(--brand-pattern), linear-gradient(120deg, var(--slide-accent) 0%, var(--slide-accent) 45%, var(--slide-accent-2) 130%); background-size: cover, auto; background-position: right bottom, center; }
+.slide.title { background-image: var(--brand-pattern), linear-gradient(90deg, var(--slide-accent) 0%, var(--slide-accent) 30%, var(--slide-accent-2) 100%); background-size: cover, auto; background-position: right bottom, center; }
 .slide.title h1 { font-size: 2.7em; max-width: 13em; }
 .slide.title h1 + p { font-size: 1.15em; }
 .slide.title .slide-body::before {
