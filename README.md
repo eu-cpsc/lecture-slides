@@ -217,6 +217,7 @@ institution is a new file in `src/styles/themes/` scoped to
 | `src/scripts/deck.ts` | Presenting, steps, scroll tracking, presenter sync, shortcuts |
 | `src/styles/` | Tokens, themes, slide styles, site chrome, print |
 | `starter/` | Example course site (the demo); also the CI test |
+| `scripts/topography.mjs` | Generates the title-slide contour pattern (`src/styles/themes/topography.svg`) |
 
 ## Releasing
 
