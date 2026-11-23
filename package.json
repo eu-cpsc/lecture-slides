@@ -50,10 +50,12 @@
     "@fontsource-variable/bitter": "^5.2.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource-variable/open-sans": "^5.2.0",
-    "katex": "^0.16.47",
-    "rehype-katex": "^7.0.1",
+    "hast-util-from-html-isomorphic": "^2.0.0",
+    "hast-util-to-text": "^4.0.5",
+    "katex": "^0.19.1",
     "remark-directive": "^4.0.0",
     "remark-math": "^6.0.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "unist-util-visit-parents": "^6.1.0"
   }
 }
