@@ -16,6 +16,7 @@
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { unified } from '@astrojs/markdown-remark';
 import remarkDirective from 'remark-directive';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -75,10 +76,15 @@ export default function lectureSlides(options) {
         const root = fileURLToPath(astroConfig.root);
         const customCss = (options.customCss ?? []).map((p) => path.resolve(root, p));
 
+        // Lectures need the unified Markdown processor: Astro 7's default,
+        // Sätteri, can't parse leaf directives (::slide) or run remark plugins.
+        astroConfig.markdown.processor = unified({
+          remarkPlugins: [remarkDirective, remarkMath, remarkSlides],
+          rehypePlugins: [rehypeKatex],
+        });
+
         updateConfig({
           markdown: {
-            remarkPlugins: [remarkDirective, remarkMath, remarkSlides],
-            rehypePlugins: [rehypeKatex],
             shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' }, wrap: false },
           },
           vite: {

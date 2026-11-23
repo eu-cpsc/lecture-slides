@@ -24,10 +24,10 @@ The default theme follows the Evangel University brand guide.
 2. In its `package.json`, replace `"file:.."` with a released version:
 
    ```json
-   "@eu-cpsc/lecture-slides": "github:eu-cpsc/lecture-slides#v0.1.0"
+   "@eu-cpsc/lecture-slides": "^0.3.0"
    ```
 
-   or, once the package is on npm, `"^0.1.0"`.
+   The package needs Astro 7 (`"astro": "^7.4.13"`) and Node 22.23.4 or newer.
 3. Edit `astro.config.mjs`: course details, and `base` (your repo name, for
    GitHub Pages).
 4. Replace the demo lecture in `src/content/lectures/` with your own. Start
@@ -49,7 +49,7 @@ import { defineConfig } from 'astro/config';
 import lectureSlides from '@eu-cpsc/lecture-slides';
 
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'https://my-org.github.io',
+  site: process.env.SITE_URL || 'https://my-org.github.io',
   base: process.env.BASE_PATH ?? '/my-repo',
   trailingSlash: 'always',
   integrations: [
