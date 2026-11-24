@@ -98,7 +98,7 @@
 .slide .katex { font-size: 1.05em; }
 
 /* ---------- Building blocks (from :::directives) ---------- */
-.slide .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 1.6em; flex: 1; min-height: 0; }
+.slide .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 1.6em; flex: 1; min-height: 0; }
 .slide .columns.wide-left { grid-template-columns: 1.6fr 1fr; }
 .slide .columns.wide-right { grid-template-columns: 1fr 1.6fr; }
 /* Columns take the full height (so images in them can size to it); other blocks keep their own height. */
