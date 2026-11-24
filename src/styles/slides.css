@@ -147,6 +147,8 @@
 .slide.title p, .slide.section p { color: color-mix(in srgb, var(--slide-on-accent) 82%, transparent); }
 .slide.title a, .slide.section a { color: inherit; }
 .slide.section::after { color: color-mix(in srgb, var(--slide-on-accent) 70%, transparent); }
+/* Section slides use the theme's section colours (the rules above read --slide-on-accent). */
+.slide.section { --slide-on-accent: var(--brand-on-section); background: var(--brand-section-bg); }
 
 /* Title slide: large heading, deck label above, brand pattern and optional logo */
 .slide.title { background-image: var(--brand-pattern), linear-gradient(90deg, var(--slide-accent) 0%, var(--slide-accent) 30%, var(--slide-accent-2) 100%); background-size: cover, auto; background-position: right bottom, center; }
@@ -171,7 +173,7 @@
 /* Section divider */
 .slide.section h1, .slide.section h2 { font-size: 2.4em; }
 .slide.section h2::before {
-  content: ''; display: block; width: 1.2em; height: 0.12em; margin-bottom: 0.45em; border-radius: 1em; background: currentColor; opacity: 0.8;
+  content: ''; display: block; width: 1.2em; height: 0.12em; margin-bottom: 0.45em; border-radius: 1em; background: var(--brand-section-rule); opacity: 0.8;
 }
 
 .slide.center .slide-body { justify-content: center; align-items: center; text-align: center; }

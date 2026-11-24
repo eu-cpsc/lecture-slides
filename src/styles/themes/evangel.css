@@ -9,6 +9,7 @@
  *   Leaf   #55705b (PMS 5615)  Blaze #d56c47 (PMS 7618)
  *   Light Gray #d2d3ce (Warm Gray 1)
  *   Maroon gradient: Maroon -> Red
+ *   Light gray gradient: CMYK 34/24/32/2 -> 17/12/16/0 (#a8aca4 -> Light Gray)
  *
  * Fonts ("University/AGTS Fonts"): Bitter ExtraBold for headings, Bitter Bold
  * for subheadings, Bitter Italic for quotations, Open Sans for body copy.
@@ -44,6 +45,9 @@
   --brand-dark: #18191a;
   --brand-dark-slide: #1d1e1f;
   --brand-pattern: url('./topography.svg');
+  --brand-section-bg: linear-gradient(90deg, #a8aca4 0%, var(--eu-light-gray) 100%);
+  --brand-on-section: var(--brand-ink);
+  --brand-section-rule: var(--eu-maroon);
 
   --font-heading: 'Bitter Variable', Georgia, serif;
   --font-sans: 'Open Sans Variable', 'Segoe UI', system-ui, sans-serif;

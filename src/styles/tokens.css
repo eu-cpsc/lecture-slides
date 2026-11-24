@@ -23,6 +23,9 @@
   --brand-dark: #121418;             /* dark-mode page background */
   --brand-dark-slide: #16191f;       /* dark slide theme background */
   --brand-pattern: none;             /* decoration on title slides (background-image) */
+  --brand-section-bg: linear-gradient(120deg, var(--brand-primary) 0%, var(--brand-primary) 45%, var(--brand-primary-2) 130%); /* section slides */
+  --brand-on-section: var(--brand-on-primary); /* text on section slides */
+  --brand-section-rule: currentColor;  /* short bar above section headings */
 
   --font-heading: system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
