@@ -179,6 +179,18 @@ building block is a CSS rule in a `customCss` file (`.slide .name { … }`).
 
 Put images in `src/content/lectures/images/` and reference them relatively:
 `![alt text](./images/diagram.svg)`. Files starting with `_` are ignored.
+An image on a line of its own in `:::fill` or a column scales to the space
+left there. To size it or the columns yourself, give the block a `style`:
+
+```markdown
+:::fill{.center style="width: 40%"}       <- image at 40% of the slide width
+![Diagram](./images/diagram.svg)
+:::
+
+::::columns{style="grid-template-columns: 1fr 2fr"}   <- 1/3 and 2/3 columns
+```
+
+Use `%` or `em` rather than `px`, so sizes scale with the slide.
 
 The demo lecture, [`starter/src/content/lectures/00-using-these-slides.md`](starter/src/content/lectures/00-using-these-slides.md),
 uses every feature.
