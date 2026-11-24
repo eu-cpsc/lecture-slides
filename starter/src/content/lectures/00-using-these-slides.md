@@ -216,7 +216,8 @@ Ones already styled:
 :::notes
 Put images next to the lecture in `src/content/lectures/images/` and link to
 them with a relative path. Wrapping an image in `:::fill` makes it use all the
-space left on the slide.
+space left on the slide. An image on a line of its own inside a column also
+scales to fit that column.
 
 **Alt text matters:** it's what screen readers announce and what shows if the
 image fails to load.

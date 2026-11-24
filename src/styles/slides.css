@@ -98,10 +98,13 @@
 .slide .katex { font-size: 1.05em; }
 
 /* ---------- Building blocks (from :::directives) ---------- */
-.slide .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 1.6em; align-items: start; flex: 1; min-height: 0; }
+.slide .columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 1.6em; flex: 1; min-height: 0; }
 .slide .columns.wide-left { grid-template-columns: 1.6fr 1fr; }
 .slide .columns.wide-right { grid-template-columns: 1fr 1.6fr; }
-.slide .columns.middle { align-items: center; }
+/* Columns take the full height (so images in them can size to it); other blocks keep their own height. */
+.slide .columns > :not(.column, .fill) { align-self: start; }
+.slide .columns.middle > :not(.column, .fill) { align-self: center; }
+.slide .columns.middle > .column { justify-content: center; }
 .slide .columns > * { margin: 0; min-width: 0; }
 .slide .column { display: flex; flex-direction: column; gap: 0.55em; min-width: 0; }
 .slide .column > * { margin: 0; }
@@ -116,8 +119,11 @@
 .slide .callout > * + * { margin-top: 0.4em; }
 .slide .directive-label, .notes .directive-label { font-weight: 700; font-size: 0.8em; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slide-accent); }
 .slide .center { text-align: center; margin-inline: auto; }
-.slide .fill { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
-.slide .fill img, .slide .fill svg { max-height: 100%; object-fit: contain; }
+.slide .fill { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.slide .fill svg { max-height: 100%; }
+/* An image on a line of its own in a column or :::fill scales to the space left there, keeping its shape. */
+.slide :is(.column, .fill) > p:has(> img:only-child) { flex: 1; min-height: 0; align-self: stretch; display: flex; }
+.slide :is(.column, .fill) > p > img:only-child { width: 100%; height: 100%; object-fit: contain; }
 .slide .bottom { margin-top: auto; }
 .slide .muted { color: var(--slide-muted); }
 .slide .big { font-size: 1.4em; }
